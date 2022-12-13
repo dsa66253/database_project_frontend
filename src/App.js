@@ -1,9 +1,13 @@
 import './App.css';
 import LessonTable from './Containers/Table';
+import Header from './Containers/Header'
 
 function App() {
   return (
-    <LessonTable/>
+    <>
+      <Header/>
+      <LessonTable/>
+    </>
   );
 }
 

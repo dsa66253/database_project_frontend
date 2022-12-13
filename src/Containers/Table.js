@@ -15,7 +15,10 @@ const SingleRow = (row) => {
             {column.map(function(column) {
                 if(lessonTable[row*7 + column] !== 0) {
                     return (
-                        <td key={column + row}>{lessonTable[row*7 + column]}</td>
+                        <>
+                            <td key={column + row + 'name'}>{lessonTable[row*7 + column].name}</td>\
+                            <td key={column + row + 'location'}>{lessonTable[row*7 + column].location}</td>
+                        </>
                     )
                 } else {
                     return (<td key={column + row}></td>)
@@ -40,7 +43,7 @@ const LessonTable = () => {
                     <td width='12%'>日</td>
                 </tr>
                 {
-                    timeID.map(function(row, index) {
+                    timeID.map(function(index) {
                         return SingleRow(index)
                     })
                 }
