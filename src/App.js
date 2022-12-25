@@ -1,13 +1,14 @@
 import './App.css';
-import LessonTable from './Containers/Table';
-import Header from './Containers/Header'
+import { Lesson } from './Containers/Lesson';
+import HomePage from './Containers/HomePage';
+import LoginPage from './Containers/LoginPage';
+
 
 function App() {
+  const { logIn } = Lesson();
+  console.log(logIn);
   return (
-    <>
-      <Header/>
-      <LessonTable/>
-    </>
+    <div>{logIn? <HomePage/> : <LoginPage/>}</div>
   );
 }
 

@@ -7,17 +7,32 @@ const lessonContext = createContext({
     addCourse: () => {},
     getCourseInfo: () => {},
     courseInfo: {},
+    setStuID: () => {},
+    stuID: "",
+    logIn: false,
+    setLogIn: () => {},
 })
 
 const LessonProvider = (props) => {
     const [schedule, setSchedule] = useState([]);
-    const [lessonTable, setLessonTable] = useState([]);
+    // const [lessonTable, setLessonTable] = useState([]);
+    const lessonTable = [{ name: "我", Location: "管一", id: 134 }]
     const [courseInfo, setCourseInfo] = useState({});
     const [stuID, setStuID] = useState("");
-    //setLessonTable(["aaa", "bbb", 0])
+    // setLessonTable(["aaa", "bbb", 0])
+    const [logIn, setLogIn] = useState(false);
 
-    const getSchedule = async (stu) => {
-        setStuID(stu);
+    setCourseInfo([
+    {
+        CId: "13088",
+        Content: "C.S.I.E. BLDG. ROOM NO.104",
+        Day: "一",
+        Time: "3",
+        LId: 274,
+        GoogleName: "台大德田館"
+    }])
+    console.log(schedule);
+    const getSchedule = async (stuID) => {
         const {
             data: { messages, data },
         } = await instance.get('/courseByUser', {
@@ -45,9 +60,8 @@ const LessonProvider = (props) => {
     const getCourseInfo = async (courseID) => {
         const {
             data: { messages, data },
-        } = await instance.get('/courseByUser',{
+        } = await instance.get('/course',{
             body: {
-                SId: stuID,
                 CId: courseID,
             }
         });
@@ -55,31 +69,31 @@ const LessonProvider = (props) => {
             setCourseInfo(data);
         }
     }
-    const addLessonTable = () => {
+    const printLessonTable = () => {
         var newTable = new Array(15*7);
         for(var i = 0; i < schedule.length(); i++) {
             var time = schedule[i].Time;
             switch (schedule[i].Day) {
                 case "一":
-                    newTable[time*7] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId}
                     break;
                 case "二":
-                    newTable[time*7+1] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+1] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 case "三":
-                    newTable[time*7+2] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+2] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 case "四":
-                    newTable[time*7+3] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+3] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 case "五":
-                    newTable[time*7+4] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+4] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 case "六":
-                    newTable[time*7+5] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+5] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 case "日":
-                    newTable[time*7+6] = { name: schedule[i].Content, location: schedule[i].Location }
+                    newTable[time*7+6] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }
                     break;
                 default:
                     break;
@@ -92,11 +106,12 @@ const LessonProvider = (props) => {
                 }
             }
         }
-        setLessonTable(newTable);
+        //setLessonTable(newTable);
+        console.log(newTable);
     }
     
     useEffect(() => {
-       addLessonTable();
+       printLessonTable();
     }, [schedule]);
 
     return (
@@ -107,6 +122,10 @@ const LessonProvider = (props) => {
                 addCourse,
                 getCourseInfo,
                 courseInfo,
+                stuID,
+                logIn,
+                setStuID,
+                setLogIn,
             }}
             {...props}
         />
