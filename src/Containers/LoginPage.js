@@ -1,5 +1,5 @@
 import { Typography, Input } from 'antd';
-import { Lesson } from '../Hooks/useProfile';
+import { Profile } from '../Hooks/useProfile';
 import styled from 'styled-components'
 // import LogIn from '../Components/LogIn'
 
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   margin: auto;`;
 
 const LoginPage = () => {
-    const { setStuID, stuID, setLogIn, logIn } = Lesson();
+    const { setStuID, stuID, setLogIn, logIn } = Profile();
     // console.log(logIn)
     const onLogin = (id) => {
         console.log("onLogin", id)
