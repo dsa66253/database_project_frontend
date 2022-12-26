@@ -1,12 +1,12 @@
 import './App.css';
 // import { Lesson } from './Containers/Lesson';
-import {Lesson} from "./Hooks/useProfile"
+import {Profile} from "./Hooks/useProfile"
 import HomePage from './Containers/HomePage';
 import LoginPage from './Containers/LoginPage';
 
 
 function App() {
-  const { logIn } = Lesson();
+  const { logIn } = Profile();
   // const {logIn} = Lesson();
   // console.log("logIn", logIn);
   return (
