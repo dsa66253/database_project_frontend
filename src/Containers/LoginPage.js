@@ -1,5 +1,5 @@
 import { Typography, Input } from 'antd';
-import { Lesson } from './Lesson';
+import { Profile } from '../Hooks/useProfile';
 import styled from 'styled-components'
 // import LogIn from '../Components/LogIn'
 
@@ -15,17 +15,17 @@ const Wrapper = styled.div`
   margin: auto;`;
 
 const LoginPage = () => {
-    const { setStuID, stuID, getSchedule, setLogIn, logIn } = Lesson();
-    console.log(logIn)
+    const { setStuID, stuID, setLogIn, logIn } = Profile();
+    // console.log(logIn)
     const onLogin = (id) => {
-        // console.log("id", id)
+        console.log("onLogin", id)
         if(!id){
             console.log(" upper id", id)
             return;
         } else {
             console.log("id", id)
             // getSchedule();
-            setLogIn( ()=>{console.log("fff"); return true;});
+            setLogIn( ()=>{console.log("setLogIn"); return true;});
             console.log("else end", id)
         }
     }

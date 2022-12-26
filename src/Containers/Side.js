@@ -3,6 +3,7 @@ import { Input, Card, Button } from "antd";
 import { Lesson } from "./Lesson";
 import styled from 'styled-components';
 import { func } from "prop-types";
+import getCourseInfo from "../Api/course";
 
 const SideBar = styled.section`
     display: flex;
@@ -14,7 +15,7 @@ const SideBar = styled.section`
 const Side = () => {
     // const [addLesson, setaddLesson] = useState();
     const [searchLesson, setSearchLesson] = useState("");
-    const {addCourse, getCourseInfo, courseInfo} = Lesson();
+    const {addCourse, courseInfo} = Lesson();
     const [search, setSearch] = useState(false)
     return (
         <SideBar style={{margin:'1em', backgroundColor: 'white'}}>
@@ -32,14 +33,14 @@ const Side = () => {
                 }}
                 style={{marginBottom:'1em'}}
             />
-            <Card title="資料庫" size='default' extra={<Button style={{color:'#0050b3'}} onClick={addCourse()}>Add</Button>}
+            {/* <Card title="資料庫" size='default' extra={<Button style={{color:'#0050b3'}} onClick={addCourse()}>Add</Button>}
                     bodyStyle={{backgroundColor:'#f5f5f5'}} headStyle={{backgroundColor:'#40a9ff', color:'white'}}>
                 <p>課號：12345</p>
                 <p>上課時間：123</p>
                 <p>地點：管111</p>
                 <p>教師：李瑞庭</p>
-            </Card>
-            {/* {() => {
+            </Card> */}
+            {() => {
                 if (search) {
                     return (
                         <Card title={courseInfo[0].CourseName} size='default' extra={<Button style={{color:'#0050b3'}} onClick={addCourse(courseInfo[0].CId)}>Add</Button>}
@@ -56,7 +57,7 @@ const Side = () => {
                 } else {
                     return (<></>)
                 }
-            }} */}
+            }}
         </SideBar>
         
     )

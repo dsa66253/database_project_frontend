@@ -1,6 +1,7 @@
 import { Lesson } from './Lesson'
 import styled from 'styled-components';
 import { DeleteOutlined } from '@ant-design/icons'
+import { deleteCourse } from '../Api/courseByUser';
 // import Icon from '@ant-design/icons/lib/components/Icon';
 
 const DeleteIcon = styled.section`
@@ -24,7 +25,7 @@ const timeTable = [{time: "7:10-8:00", id: '0'}, {time: "8:10-9:00", id: '1'},
 const column = ['0','1','2','3','4','5','6']
 
 const SingleRow = (time) => {
-    const { lessonTable, DeleteCourse } = Lesson();
+    const { lessonTable } = Lesson();
     const row = time.id;
     return (
         <tr height="45" align="left" valign="TOP" key={row}>
@@ -37,7 +38,7 @@ const SingleRow = (time) => {
                         <div>
                             <td key={column + row + 'name'}>{lessonTable[row*7 + column].name}</td>\
                             <td key={column + row + 'location'}>{lessonTable[row*7 + column].location}</td>
-                            <DeleteIcon onClick={DeleteCourse(lessonTable[row*7 + column].CId)}><DeleteOutlined /></DeleteIcon>
+                            <DeleteIcon onClick={deleteCourse(lessonTable[row*7 + column].CId)}><DeleteOutlined /></DeleteIcon>
                         </div>
                     )
                 } else {
