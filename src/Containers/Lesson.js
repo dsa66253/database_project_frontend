@@ -1,10 +1,13 @@
+import { async } from "q";
 import {createContext, useContext, useState, useEffect} from "react"
 import instance from '../api';
+import {course} from '../db/db'
 
 const lessonContext = createContext({
     lessonTable: [],
     getSchedule: () => {},
     addCourse: () => {},
+    DeleteCourse: () => {},
     getCourseInfo: () => {},
     courseInfo: {},
     setStuID: () => {},
@@ -14,12 +17,10 @@ const lessonContext = createContext({
 })
 
 const LessonProvider = (props) => {
-    const [schedule, setSchedule] = useState([]);
-    // const [lessonTable, setLessonTable] = useState([]);
-    const lessonTable = [{ name: "我", Location: "管一", id: 134 }]
+    const [schedule, setSchedule] = useState([course]);
+    const [lessonTable, setLessonTable] = useState([]);
     const [courseInfo, setCourseInfo] = useState({});
     const [stuID, setStuID] = useState("");
-    // setLessonTable(["aaa", "bbb", 0])
     const [logIn, setLogIn] = useState(false);
 
     setCourseInfo([
@@ -44,17 +45,17 @@ const LessonProvider = (props) => {
             setSchedule(data);
         }
     }
-    const addCourse = async (courseID) => {
+    const addCourse = async () => {
         const {
             data: { messages, data },
         } = await instance.post('/courseByUser',{
             body: {
                 SId: stuID,
-                CId: courseID,
+                CId: courseInfo.CId,
             }
         });
         if(messages) {
-            setSchedule([...data]);
+            setSchedule([...courseInfo]);
         }
     }
     const getCourseInfo = async (courseID) => {
@@ -68,6 +69,22 @@ const LessonProvider = (props) => {
         if(messages) {
             setCourseInfo(data);
         }
+    }
+    
+    const DeleteCourse = async(cid) => {
+        const {
+            data: { messages, data },
+        } = await instance.delete('/courseByUser',{
+            body: {
+                SId: stuID,
+                CId: cid,
+            }
+        });
+        setSchedule((prev) => {
+            prev = prev.filter(function(course) {
+                return course.CId !== cid;
+            })
+        })
     }
     const printLessonTable = () => {
         var newTable = new Array(15*7);
@@ -106,7 +123,7 @@ const LessonProvider = (props) => {
                 }
             }
         }
-        //setLessonTable(newTable);
+        setLessonTable(newTable);
         console.log(newTable);
     }
     
@@ -120,6 +137,7 @@ const LessonProvider = (props) => {
                 lessonTable,
                 getSchedule,
                 addCourse,
+                DeleteCourse,
                 getCourseInfo,
                 courseInfo,
                 stuID,

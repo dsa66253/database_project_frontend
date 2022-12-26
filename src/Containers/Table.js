@@ -1,13 +1,18 @@
 import { Lesson } from './Lesson'
 import styled from 'styled-components';
+import { DeleteOutlined } from '@ant-design/icons'
+// import Icon from '@ant-design/icons/lib/components/Icon';
 
-// const Wrapper = styled.section`
-//     display: flex;
-//     backgroundColor='#e6f7ff'
-// `
-const TableWrapper = styled.section`
-    align: left;
+const DeleteIcon = styled.section`
+    display: flex;
+    position: relative;
+    left: 85%
+    // top: 85%
 `
+const TableWrapper = styled.section`
+    align: center;
+`
+
 const timeTable = [{time: "7:10-8:00", id: '0'}, {time: "8:10-9:00", id: '1'},
                    {time: "9:10-10:00", id: '2'}, {time: "10:20-11:10", id: '3'},
                    {time: "11:20-12:10", id: '4'}, {time: "12:20-13:10", id: '5'},
@@ -19,7 +24,7 @@ const timeTable = [{time: "7:10-8:00", id: '0'}, {time: "8:10-9:00", id: '1'},
 const column = ['0','1','2','3','4','5','6']
 
 const SingleRow = (time) => {
-    const { lessonTable } = Lesson();
+    const { lessonTable, DeleteCourse } = Lesson();
     const row = time.id;
     return (
         <tr height="45" align="left" valign="TOP" key={row}>
@@ -29,13 +34,18 @@ const SingleRow = (time) => {
             {column.map(function(column) {
                 if(lessonTable[row*7 + column] !== undefined) {
                     return (
-                        <>
+                        <div>
                             <td key={column + row + 'name'}>{lessonTable[row*7 + column].name}</td>\
                             <td key={column + row + 'location'}>{lessonTable[row*7 + column].location}</td>
-                        </>
+                            <DeleteIcon onClick={DeleteCourse(lessonTable[row*7 + column].CId)}><DeleteOutlined /></DeleteIcon>
+                        </div>
                     )
                 } else {
-                    return (<td key={column + row}></td>)
+                    return (<td key={column + row}>
+                        <h1 align="center">dkdkdkdkdk</h1>
+                        <h1 align="center">dkdkdkdkdk</h1>
+                        <DeleteIcon><DeleteOutlined /></DeleteIcon>
+                    </td>)
                 }
             })}
         </tr>
@@ -45,11 +55,11 @@ const SingleRow = (time) => {
 const LessonTable = () => {
     return (
             <TableWrapper>
-                <table border='1' cellPadding='3' cellSpacing='0' >
+                <table cellPadding='3' cellSpacing='0' >
                     <tbody>
                         <tr>
-                            <td align='center' width='8%'></td>
-                            <td align='center' width='12%'>一</td>
+                            <td align='center' width='8%' ></td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '10px'}}>一</td>
                             <td align='center' width='12%'>二</td>
                             <td align='center' width='12%'>三</td>
                             <td align='center' width='12%'>四</td>

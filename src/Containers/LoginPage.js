@@ -42,7 +42,6 @@ const LoginPage = () => {
             enterButton="Log in"
             placeholder="Enter your student ID."
             onSearch={(stuID) => {
-                
                 onLogin(stuID);
             }}
             style={{marginBottom:'1em'}}
