@@ -1,35 +1,28 @@
 import instance from "../api";
 
 const getSchedule = async (stuID) => {
-    const {
-        data: { messages, data },
-    } = await instance.get('/courseByUser', {
-        body: {
+    const {data} = await instance.get('/courseByUser', {
+        params: {
             SId: stuID, 
         },
+        headers: {
+            lang: 'ch'
+        }
     });
-    if(messages) {
-        return data;
-    } 
+    return data;
 }
 
-const addCourse = async (stuID, CId) => {
-    const {
-        data: { messages, data },
-    } = await instance.post('/courseByUser',{
+const addCourseByUser = async (stuID, CId) => {
+    const {data} = await instance.post('/courseByUser',{
         body: {
             SId: stuID,
             CId: CId,
         }
     });
-    if(messages) {
-        return data;
-    }
+    return data;
 }
-const deleteCourse = async(stuID, cid) => {
-    const {
-        data: { messages, data },
-    } = await instance.delete('/courseByUser',{
+const deleteCourseByUser = async(stuID, cid) => {
+    const {data} = await instance.delete('/courseByUser',{
         body: {
             SId: stuID,
             CId: cid,
@@ -38,4 +31,4 @@ const deleteCourse = async(stuID, cid) => {
     return data;
 }
 
-export {getSchedule, addCourse, deleteCourse}
+export {getSchedule, addCourseByUser, deleteCourseByUser}

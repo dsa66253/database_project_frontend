@@ -1,7 +1,8 @@
 import { Typography, Input } from 'antd';
 import { Profile } from '../Hooks/useProfile';
 import styled from 'styled-components'
-// import LogIn from '../Components/LogIn'
+import { getSchedule } from '../Api/courseByUser';
+import getUser from '../Api/user';
 
 const { Title } = Typography;
 
@@ -15,16 +16,20 @@ const Wrapper = styled.div`
   margin: auto;`;
 
 const LoginPage = () => {
-    const { setStuID, stuID, setLogIn, logIn } = Profile();
-    // console.log(logIn)
-    const onLogin = (id) => {
+    const { setStuID, stuID, setLogIn, setSchedule} = Profile();
+    const onLogin = async (id) => {
         console.log("onLogin", id)
         if(!id){
             console.log(" upper id", id)
             return;
         } else {
             console.log("id", id)
-            // getSchedule();
+            await getUser(id);
+            const sch = await getSchedule(id);
+            // console.log(sch);
+            const tmp = [...sch];
+            console.log(tmp);
+            setSchedule(tmp);
             setLogIn( ()=>{console.log("setLogIn"); return true;});
             console.log("else end", id)
         }

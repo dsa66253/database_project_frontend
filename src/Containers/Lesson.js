@@ -1,19 +1,16 @@
-import { async } from "q";
 import {createContext, useContext, useState, useEffect} from "react"
-import instance from '../api';
 import {course} from '../db/db'
 
 const lessonContext = createContext({
     lessonTable: [],
-    courseInfo: {},
+    setSchedule: () => {},
 })
 
 const LessonProvider = (props) => {
     const [schedule, setSchedule] = useState([]);
     const [lessonTable, setLessonTable] = useState([]);
-    const [courseInfo, setCourseInfo] = useState({});
     
-    const printLessonTable = () => {
+    function printLessonTable() {
         var newTable = new Array(15*7);
         for(var i = 0; i < schedule.length(); i++) {
             var time = schedule[i].Time;
@@ -54,16 +51,19 @@ const LessonProvider = (props) => {
         console.log(newTable);
     }
 
+    useEffect(() => {
+        printLessonTable();
+    }, [schedule])
+
     return (
         <lessonContext.Provider
             value={{
                 lessonTable,
-                courseInfo,
+                setSchedule,
             }}
             {...props}
         />
     )
-
 }
 
 const Lesson = () => useContext(lessonContext);

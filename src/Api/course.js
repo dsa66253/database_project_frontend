@@ -1,11 +1,12 @@
 import instance from "../api";
 
 const getCourseInfo = async (courseID) => {
-    const {
-        data: { messages, data },
-    } = await instance.get('/course',{
-        body: {
+    const {data} = await instance.get('/course',{
+        params: {
             CId: courseID,
+        },
+        headers: {
+            lang: 'ch'
         }
     });
     return data;

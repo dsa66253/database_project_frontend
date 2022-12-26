@@ -1,7 +1,7 @@
-import { Lesson } from './Lesson'
 import styled from 'styled-components';
 import { DeleteOutlined } from '@ant-design/icons'
-import { deleteCourse } from '../Api/courseByUser';
+import { deleteCourseByUser } from '../Api/courseByUser';
+import { Profile } from '../Hooks/useProfile';
 // import Icon from '@ant-design/icons/lib/components/Icon';
 
 const DeleteIcon = styled.section`
@@ -24,31 +24,46 @@ const timeTable = [{time: "7:10-8:00", id: '0'}, {time: "8:10-9:00", id: '1'},
                    {time: "21:10-22:00", id: 'D'}]
 const column = ['0','1','2','3','4','5','6']
 
+const Ta = (row) => {
+    const { stuID, lessonTable, setSchedule  } = Profile();
+
+    const deleteCourse= async(stuID, cid) => {
+        const del = await deleteCourseByUser(stuID, cid);
+        if(del) {
+            setSchedule((prev) => {
+                prev = prev.filter(function(item)  {
+                    return item.CId !== cid;
+                })
+            })
+        }
+    }
+    return(
+        column.map(function(index) {
+            console.log(lessonTable[row*7 + index])
+        if(lessonTable[row*7 + index] !== undefined) {
+            console.log(row , index)
+            return (
+                <td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
+                    <h1 key={index + row + 'name'}>{lessonTable[row*7 + index].name}</h1>
+                    <h1 key={index + row + 'location'}>{lessonTable[row*7 + index].location}</h1>
+                    <DeleteIcon onClick={deleteCourse(stuID, lessonTable[row*7 + index].CId)}><DeleteOutlined /></DeleteIcon>
+                </td>
+            )
+        } else {
+            return (<td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
+            </td>)
+        }
+    }))
+}
+
 const SingleRow = (time) => {
-    const { lessonTable } = Lesson();
     const row = time.id;
     return (
         <tr height="45" align="left" valign="TOP" key={row}>
-            <td align="center" valign="middle" >{row}<br/>
+            <td align="center" valign="middle" style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>{row}<br/>
                 <font size="1">{time.time}</font>
             </td>
-            {column.map(function(column) {
-                if(lessonTable[row*7 + column] !== undefined) {
-                    return (
-                        <div>
-                            <td key={column + row + 'name'}>{lessonTable[row*7 + column].name}</td>\
-                            <td key={column + row + 'location'}>{lessonTable[row*7 + column].location}</td>
-                            <DeleteIcon onClick={deleteCourse(lessonTable[row*7 + column].CId)}><DeleteOutlined /></DeleteIcon>
-                        </div>
-                    )
-                } else {
-                    return (<td key={column + row}>
-                        <h1 align="center">dkdkdkdkdk</h1>
-                        <h1 align="center">dkdkdkdkdk</h1>
-                        <DeleteIcon><DeleteOutlined /></DeleteIcon>
-                    </td>)
-                }
-            })}
+            <Ta row={row}/>
         </tr>
     )
 }
@@ -60,13 +75,13 @@ const LessonTable = () => {
                     <tbody>
                         <tr>
                             <td align='center' width='8%' ></td>
-                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '10px'}}>一</td>
-                            <td align='center' width='12%'>二</td>
-                            <td align='center' width='12%'>三</td>
-                            <td align='center' width='12%'>四</td>
-                            <td align='center' width='12%'>五</td>
-                            <td align='center' width='12%'>六</td>
-                            <td align='center' width='12%'>日</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>一</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>二</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>三</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>四</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>五</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>六</td>
+                            <td align='center' width='12%' style={{backgroundColor: '#D2E9FF', borderRadius: '15px'}}>日</td>
                         </tr>
                     {
                         timeTable.map(function(time) {
