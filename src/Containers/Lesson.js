@@ -12,11 +12,11 @@ const LessonProvider = (props) => {
     
     function printLessonTable() {
         var newTable = new Array(15*7);
-        for(var i = 0; i < schedule.length(); i++) {
+        for(var i = 0; i < schedule.length; i++) {
             var time = schedule[i].Time;
             switch (schedule[i].Day) {
                 case "一":
-                    newTable[time*7] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId}
+                    newTable[time*7] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId, }
                     break;
                 case "二":
                     newTable[time*7+1] = { name: schedule[i].Content, location: schedule[i].Location, id: schedule[i].CId }

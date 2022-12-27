@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   margin: auto;`;
 
 const LoginPage = () => {
-    const { setStuID, stuID, setLogIn, setSchedule} = Profile();
+    const { setStuID, stuID, setLogIn, setSchedule, language } = Profile();
     const onLogin = async (id) => {
         console.log("onLogin", id)
         if(!id){
@@ -25,13 +25,11 @@ const LoginPage = () => {
         } else {
             console.log("id", id)
             await getUser(id);
-            const sch = await getSchedule(id);
-            // console.log(sch);
-            const tmp = [...sch];
-            console.log(tmp);
-            setSchedule(tmp);
+            const tmp = await getSchedule(id, language);
+            const sch = [...tmp];
+            console.log(sch);
+            setSchedule(sch);
             setLogIn( ()=>{console.log("setLogIn"); return true;});
-            console.log("else end", id)
         }
     }
     return (

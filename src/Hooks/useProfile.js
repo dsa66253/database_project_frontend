@@ -6,6 +6,8 @@ const profileContext = createContext({
     setLogIn: () => {},
     lessonTable: [],
     setSchedule: () => {},
+    language: "",
+    setLanguage: () => {},
 })
 
 const ProfileProvider = (props) => {
@@ -13,9 +15,13 @@ const ProfileProvider = (props) => {
     const [logIn, setLogIn] = useState(false);
     const [schedule, setSchedule] = useState([]);
     const [lessonTable, setLessonTable] = useState([]);
+    const [language, setLanguage] = useState("ch");
 
     function printLessonTable() {
         var newTable = new Array(15*7);
+        if(schedule === undefined) {
+            return;
+        }
         for(var i = 0; i < schedule.length; i++) {
             var time = schedule[i].Time;
             switch (schedule[i].Day) {
@@ -68,6 +74,8 @@ const ProfileProvider = (props) => {
                 setLogIn,
                 lessonTable,
                 setSchedule,
+                language,
+                setLanguage,
             }}
             {...props}
         />
