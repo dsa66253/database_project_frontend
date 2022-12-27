@@ -28,6 +28,7 @@ const column = [0,1,2,3,4,5,6]
 
 const Ta = (cnt) => {
     const { stuID, lessonTable, setSchedule, language } = Profile();
+    const querystring = "https://www.google.com/maps/search/?api=1&query="
     // console.log(lessonTable);
     const row = cnt.row
     const deleteCourse = async(e) => {
@@ -58,12 +59,14 @@ const Ta = (cnt) => {
     return(
         column.map(function(index) {
             var num = row*7 + index;
-            if(lessonTable[row*7 + index] !== undefined) {
+            if(lessonTable[num] !== undefined) {
                 return (
                     <td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
-                        <h1 key={index + row + 'name'} align="center">{lessonTable[row*7 + index].name}</h1>
-                        <p key={index + row + 'location'} align="center">{lessonTable[row*7 + index].location}</p>
-                        <DeleteIcon value={lessonTable[row*7 + index].id} onClick={deleteCourse}><DeleteOutlined /></DeleteIcon>
+                        <h1 align="center" key={index + row + 'name'} 
+                            >{lessonTable[num].name}</h1>
+                        <p align="center" ><a key={index + row + 'location'}href={querystring + lessonTable[num].google} 
+                            target="_blank" rel="noreferrer">{lessonTable[num].location}</a></p>
+                        <DeleteIcon value={lessonTable[num].id} onClick={deleteCourse}><DeleteOutlined /></DeleteIcon>
                     </td>
                 )
             } else {

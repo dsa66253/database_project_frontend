@@ -37,25 +37,25 @@ const ProfileProvider = (props) => {
             var time = schedule[i].Time;
             switch (schedule[i].Day) {
                 case "一":
-                    newTable[time*7] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId}
+                    newTable[time*7] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName}
                     break;
                 case "二":
-                    newTable[time*7+1] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+1] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 case "三":
-                    newTable[time*7+2] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+2] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 case "四":
-                    newTable[time*7+3] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+3] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 case "五":
-                    newTable[time*7+4] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+4] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 case "六":
-                    newTable[time*7+5] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+5] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 case "日":
-                    newTable[time*7+6] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId }
+                    newTable[time*7+6] = { name: schedule[i].CourseName, location: schedule[i].Location, id: schedule[i].CId, google: schedule[i].GoogleName }
                     break;
                 default:
                     break;
