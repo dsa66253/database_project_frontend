@@ -1,4 +1,7 @@
+import { async } from "q";
 import {createContext, useContext, useState, useEffect} from "react"
+import { getSchedule } from "../Api/courseByUser";
+
 const profileContext = createContext({
     setStuID: () => {},
     stuID: "",
@@ -16,6 +19,14 @@ const ProfileProvider = (props) => {
     const [schedule, setSchedule] = useState([]);
     const [lessonTable, setLessonTable] = useState([]);
     const [language, setLanguage] = useState("ch");
+
+    async function changeSchedule() {
+        console.log(language)
+        const tmp = await getSchedule(stuID, language);
+        const sch = [...tmp];
+        console.log(sch);
+        setSchedule(sch);
+    }
 
     function printLessonTable() {
         var newTable = new Array(15*7);
@@ -58,12 +69,17 @@ const ProfileProvider = (props) => {
             }
         }
         setLessonTable(newTable);
-        console.log(newTable);
+        // console.log(newTable);
     }
 
     useEffect(() => {
         printLessonTable();
     }, [schedule])
+
+    useEffect(() => {
+        console.log(language);
+        changeSchedule();
+    }, [language])
 
     return (
         <profileContext.Provider

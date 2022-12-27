@@ -1,12 +1,12 @@
 import instance from "../api";
 
-const getSchedule = async (stuID) => {
+const getSchedule = async (stuID, lan) => {
     const {data} = await instance.get('/courseByUser', {
         params: {
             SId: stuID, 
         },
         headers: {
-            lang: 'ch'
+            lang: lan
         }
     });
     return data;
@@ -23,7 +23,7 @@ const addCourseByUser = async (stuID, CId) => {
 }
 const deleteCourseByUser = async(stuID, cid) => {
     const {data} = await instance.delete('/courseByUser',{
-        body: {
+        params: {
             SId: stuID,
             CId: cid,
         }

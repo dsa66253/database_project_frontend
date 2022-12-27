@@ -4,6 +4,7 @@ import { Profile } from "../Hooks/useProfile"
 import styled from 'styled-components';
 import getCourseInfo from "../Api/course";
 import { addCourseByUser } from "../Api/courseByUser";
+import { getSchedule } from "../Api/courseByUser";
 
 const SideBar = styled.section`
     display: flex;
@@ -12,13 +13,14 @@ const SideBar = styled.section`
     
 `
 const Side = () => {
+    const {language} = Profile();
     const [searchLesson, setSearchLesson] = useState("");
     const [courseInfo, setCourseInfo] = useState([]);
     const {stuID, setSchedule} = Profile();
     const [search, setSearch] = useState(false)
 
     const searchCourse = async (cid) => {
-        const course = await getCourseInfo(cid);
+        const course = await getCourseInfo(cid, language);
         let tmp = [...course]
         console.log("tmp", tmp)
         setCourseInfo(tmp);
@@ -29,7 +31,10 @@ const Side = () => {
         const add = await addCourseByUser(stuID, courseInfo[0].CId);
         console.log(add)
         if (add) {
-            setSchedule([...courseInfo]);
+            const tmp = await getSchedule(stuID, language);
+            const sch = [...tmp];
+            console.log(sch);
+            setSchedule(sch);
         }
     }
     return (
@@ -56,7 +61,6 @@ const Side = () => {
                 <p>教師：李瑞庭</p>
             </Card> */}
             {(() => {
-                console.log(courseInfo);
                 if (search) {
                     return (
                         <Card title={courseInfo[0].CourseName} size='default' extra={<Button style={{color:'#0050b3'}} onClick={addCourse}>Add</Button>}

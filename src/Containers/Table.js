@@ -3,11 +3,13 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { deleteCourseByUser } from '../Api/courseByUser';
 import { Profile } from '../Hooks/useProfile';
 // import Icon from '@ant-design/icons/lib/components/Icon';
+import { getSchedule } from '../Api/courseByUser';
 
-const DeleteIcon = styled.section`
+const DeleteIcon = styled.button`
     display: flex;
     position: relative;
     left: 85%
+    // border-radius
     // top: 85%
 `
 const TableWrapper = styled.section`
@@ -25,42 +27,49 @@ const timeTable = [{time: "7:10-8:00", id: '0', index: 0}, {time: "8:10-9:00", i
 const column = [0,1,2,3,4,5,6]
 
 const Ta = (cnt) => {
-    const { stuID, lessonTable, setSchedule, courseInfo  } = Profile();
-    console.log(lessonTable);
+    const { stuID, lessonTable, setSchedule, language } = Profile();
+    // console.log(lessonTable);
     const row = cnt.row
-    const deleteCourse = async() => {
+    const deleteCourse = async(e) => {
+        console.log(e.currentTarget.value);
+        const cid = e.currentTarget.value;
+        console.log("stu", stuID);
+        console.log("cid", cid);
         const del = await deleteCourseByUser(stuID, cid);
         if(del) {
-            setSchedule((prev) => {
-                if(prev === undefined) {
-                    return prev;
-                } else {
-                    prev = prev.filter(function(item)  {
-                        return item.CId !== cid;
-                    })
-                }
-            })
+            console.log(1)
+            // setSchedule((prev) => {
+            //     console.log("sch", prev)
+            //     if(prev === undefined) {
+            //         return prev;
+            //     } else {
+            //         prev = prev.filter(function(item)  {
+            //             return item.id !== cid;
+            //         })
+            //     }
+            // })
+            const tmp = await getSchedule(stuID, language);
+            const sch = [...tmp];
+            console.log(sch);
+            setSchedule(sch);
         }
     }
-    console.log("row", row)
+    // console.log("row", row)
     return(
         column.map(function(index) {
-            console.log(lessonTable[row*7 + index])
-            var num = row*7 + index
-            console.log(num)
-        if(lessonTable[row*7 + index] !== undefined) {
-            console.log(row , index)
-            return (
-                <td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
-                    <h1 key={index + row + 'name'}>{lessonTable[row*7 + index].name}</h1>
-                    <h1 key={index + row + 'location'}>{lessonTable[row*7 + index].location}</h1>
-                    <DeleteIcon onClick={deleteCourse}><DeleteOutlined /></DeleteIcon>
-                </td>
-            )
-        } else {
-            return (<td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
-            </td>)
-        }
+            var num = row*7 + index;
+            if(lessonTable[row*7 + index] !== undefined) {
+                return (
+                    <td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
+                        <h1 key={index + row + 'name'} align="center">{lessonTable[row*7 + index].name}</h1>
+                        <p key={index + row + 'location'} align="center">{lessonTable[row*7 + index].location}</p>
+                        <DeleteIcon value={lessonTable[row*7 + index].id} onClick={deleteCourse}><DeleteOutlined /></DeleteIcon>
+                    </td>
+                )
+            } else {
+                return (<td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
+                </td>)
+            }
     }))
 }
 

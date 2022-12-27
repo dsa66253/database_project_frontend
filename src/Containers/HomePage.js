@@ -9,26 +9,19 @@ const { Header, Content, Sider } = Layout;
 
 
 const HomePage = () => {
-    const { setLogIn, setLanguage, language, setSchedule, stuID} = Profile();
+    const { setLogIn, language, setLanguage} = Profile();
     const LogOut = () => {
         setLogIn(false);
     }
 
-    const changeLan = async () => {
+    function changeLan() {
         if(language === "ch") {
-            setLanguage("en")
-            const tmp = await getSchedule(stuID, language);
-            const sch = [...tmp];
-            console.log(sch);
-            setSchedule(sch);
+            setLanguage("en");
         } else {
-            setLanguage("ch")
-            const tmp = await getSchedule(stuID, language);
-            const sch = [...tmp];
-            console.log(sch);
-            setSchedule(sch);
+            setLanguage("ch");
         }
     }
+
 
     return (
         <Layout>
