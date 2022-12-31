@@ -1,7 +1,7 @@
 import instance from "../api";
 
 const postUser = async (stuID) => {
-    console.log("postUser was called")
+    // console.log("postUser was called")
     
     try{
         const {data} = await instance.post('/user', {
@@ -12,7 +12,7 @@ const postUser = async (stuID) => {
                 'Access-Control-Allow-Origin' : '*'
             }
         });
-        console.log("data", data)
+        // console.log("data", data)
         return data
     }catch (e){
         throw e

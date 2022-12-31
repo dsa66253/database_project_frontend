@@ -1,38 +1,38 @@
 import LessonTable from './Table';
-import { useState } from 'react';
-import { Button, Layout } from 'antd';
+import { Button, Layout, Switch } from 'antd';
+import {LogoutOutlined} from "@ant-design/icons";
 import Side from './Side';
 import { Profile } from '../Hooks/useProfile';
-import { getSchedule } from '../Api/courseByUser';
-import { async } from 'q';
+
 const { Header, Content, Sider } = Layout;
 
 
 const HomePage = () => {
-    const { setLogIn, language, setLanguage} = Profile();
+    const { setLogIn, language, setLanguage, stuID} = Profile();
     const LogOut = () => {
         setLogIn(false);
     }
-
-    function changeLan() {
-        if(language === "ch") {
-            setLanguage("en");
-        } else {
+    const onChange = (checked) => {
+        if (checked){
             setLanguage("ch");
+        }else{
+            setLanguage("en");
         }
-    }
-
+    };
 
     return (
         <Layout>
             <Header style={{color:'white', fontSize: '40px',  backgroundColor:'#91d5ff', display: 'flex', justifyContent:'space-between'}}>
-                <div className='logo'>Lesson Table</div>
-                <Button style={{position: 'relative', top:'25%', left:'33%'}} onClick={changeLan}>{language}</Button>
-                <Button style={{position: 'relative', top:'25%'}} onClick={LogOut}>Log Out</Button>
+                <div className='logo'>{stuID}'s Lesson Table</div>
+                <div style={{float:"right"}}>
+                    <Switch style={{margin:"auto"}} defaultChecked checkedChildren="ch" unCheckedChildren="en" onChange={onChange} />
+                    <LogoutOutlined style={{margin:"auto"}} onClick={LogOut}/>
+                </div>
+
             </Header>
-            <Layout style={{backgroundColor: 'white'}}>
-                <Sider width={300} theme='light'><Side/></Sider>
-                <Content theme='light' backgroundColor='white'>
+            <Layout>
+                <Sider width={300} theme='light' style={{margin:'1em', backgroundColor:"#f5f5f5"}}><Side/></Sider>
+                <Content theme='light' style={{margin:'1em'}}>
                     <LessonTable/>
                 </Content>
             </Layout>

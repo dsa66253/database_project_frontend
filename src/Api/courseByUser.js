@@ -19,6 +19,7 @@ const addCourseByUser = async (stuID, CId) => {
             CId: CId,
         }
     });
+    console.log(data)
     return data;
 }
 const deleteCourseByUser = async(stuID, cid) => {

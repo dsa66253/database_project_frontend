@@ -1,4 +1,4 @@
-import { Typography, Input, Alert, message} from 'antd';
+import { Typography, Input, message} from 'antd';
 import { Profile } from '../Hooks/useProfile';
 import styled from 'styled-components'
 import {postUser, getUser} from '../Api/user';
