@@ -1,24 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+// import { Lesson } from './Containers/Lesson';
+import {Profile} from "./Hooks/useProfile"
+import HomePage from './Containers/HomePage';
+import LoginPage from './Containers/LoginPage';
+
 
 function App() {
+  const { logIn } = Profile();
+  // const {logIn} = Lesson();
+  // console.log("logIn", logIn);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <LoginPage/>
+    <div>{logIn? <HomePage/> : <LoginPage/>}</div>
   );
 }
 
