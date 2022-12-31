@@ -24,7 +24,7 @@ const ProfileProvider = (props) => {
         console.log(language)
         const tmp = await getSchedule(stuID, language);
         const sch = [...tmp];
-        console.log(sch);
+        // console.log(sch);
         setSchedule(sch);
     }
 
@@ -77,7 +77,7 @@ const ProfileProvider = (props) => {
     }, [schedule])
 
     useEffect(() => {
-        console.log(language);
+        // console.log(language);
         changeSchedule();
     }, [language])
 

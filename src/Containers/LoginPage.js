@@ -1,8 +1,7 @@
-import { Typography, Input } from 'antd';
+import { Typography, Input, Alert, message} from 'antd';
 import { Profile } from '../Hooks/useProfile';
 import styled from 'styled-components'
-import { getSchedule } from '../Api/courseByUser';
-import getUser from '../Api/user';
+import {postUser, getUser} from '../Api/user';
 
 const { Title } = Typography;
 
@@ -16,31 +15,48 @@ const Wrapper = styled.div`
   margin: auto;`;
 
 const LoginPage = () => {
-    const { setStuID, stuID, setLogIn, setSchedule, language } = Profile();
+    const { setStuID, stuID, setLogIn} = Profile();
+    const [messageApi, contextHolder] = message.useMessage();
+    const showMessage = (type, content, duration=1.5)=>{
+        // console.log(type, content, duration)
+        messageApi.open({type, content, duration})
+    }
     const onLogin = async (id) => {
-        console.log("onLogin", id)
         if(!id){
-            console.log(" upper id", id)
-            return;
+            showMessage("error", 'Empty student ID is not allowed')
+            // return;
         } else {
-            console.log("id", id)
-            await getUser(id);
-            const tmp = await getSchedule(id, language);
-            const sch = [...tmp];
-            console.log(sch);
-            setSchedule(sch);
-            setLogIn( ()=>{console.log("setLogIn"); return true;});
+            showMessage("loading", "Logging in...", 0)
+            let correct = false
+            try{
+                correct = await postUser(id)
+                messageApi.destroy()
+                if (correct){
+                    // user exist
+                    showMessage("success", "Welcome again")
+                }else{
+                    // create new user
+                    showMessage("success", "Welcome my new friend")
+                }
+                // always login  
+                setLogIn(true)
+            }catch (e){
+                messageApi.destroy()
+                showMessage("error", 'Something went wrong with server', 2)
+                console.log("e", e)
+            }
+            
+
         }
     }
     return (
         <Wrapper>
+            {contextHolder}
             <Title>Log In</Title>
             <Input.Search
                 defaultValue={stuID}
                 onChange={(e) => {  
                 setStuID(e.target.value)
-                // console.log(e.target.value);
-                // console.log(stuID);
             }}
             enterButton="Log in"
             placeholder="Enter your student ID."
