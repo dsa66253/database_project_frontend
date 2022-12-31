@@ -1,5 +1,4 @@
 import {createContext, useContext, useState, useEffect} from "react"
-import {course} from '../db/db'
 
 const lessonContext = createContext({
     lessonTable: [],
