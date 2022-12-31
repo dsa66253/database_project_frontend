@@ -3,6 +3,7 @@ import { Button, Layout, Switch } from 'antd';
 import {LogoutOutlined} from "@ant-design/icons";
 import Side from './Side';
 import { Profile } from '../Hooks/useProfile';
+import { useEffect } from 'react';
 
 const { Header, Content, Sider } = Layout;
 
@@ -19,10 +20,9 @@ const HomePage = () => {
             setLanguage("en");
         }
     };
-
     return (
         <Layout>
-            <Header style={{color:'white', fontSize: '40px',  backgroundColor:'#91d5ff', display: 'flex', justifyContent:'space-between'}}>
+            <Header style={{color:'white', fontSize: '40px',  backgroundColor:'#40a9ff', display: 'flex', justifyContent:'space-between'}}>
                 <div className='logo'>{stuID}'s Lesson Table</div>
                 <div style={{float:"right"}}>
                     <Switch style={{margin:"auto"}} defaultChecked checkedChildren="ch" unCheckedChildren="en" onChange={onChange} />

@@ -21,7 +21,6 @@ const Side = () => {
     const [search, setSearch] = useState(false)
     const [messageApi, contextHolder] = message.useMessage();
     const showMessage = (type, content, duration=1.5)=>{
-        // console.log(type, content, duration)
         messageApi.open({type, content, duration})
     }
 
@@ -30,22 +29,22 @@ const Side = () => {
         const course = await getCourseInfo(cid, language);
         if(course.length===0){
             showMessage("error", "Not found course")
+            setSearch(false);
         }else{
             setCourseInfo(course);
             setSearch(true);
         }
-
     }
 
     const addCourse = async () => {
-        const add = await addCourseByUser(stuID, courseInfo[0].CId);
-        if (add.length===0) {
+        const addSuccess = await addCourseByUser(stuID, courseInfo[0].CId);
+        console.log("addSuccess", addSuccess)
+        if (addSuccess) {
             const tmp = await getSchedule(stuID, language);
-            const sch = [...tmp];
-            console.log(sch);
-            setSchedule(sch);
+            setSchedule(tmp);
+            showMessage("success", "successfully add the course")
         }else{
-            console.log("not found course")
+            showMessage("error", "fail to add the course")
         }
     }
     return (
@@ -67,7 +66,7 @@ const Side = () => {
             
             {
                 search?
-                (<Card title={courseInfo[0].CourseName} size='default' extra={<Button style={{color:'#0050b3'}} onClick={addCourse}>Add</Button>}
+                (<Card title={courseInfo[0].CourseName} size='default' extra={<Button style={{color:'#40a9ff'}} onClick={addCourse}>Add</Button>}
                         bodyStyle={{backgroundColor:'#eeeeee'}} headStyle={{backgroundColor:'#40a9ff', color:'white'}}>
                     <p>課號：{courseInfo[0].CId}</p>
                     <p>上課時間：{courseInfo.map(function(item) {
