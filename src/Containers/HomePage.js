@@ -14,6 +14,7 @@ const HomePage = () => {
     const { setLogIn, language, setLanguage, stuID} = Profile();
     useEffect(()=>{
         window.scrollTo({top: 0, behavior: 'smooth'});
+        setIsModalOpen(true)
     }, [])
     const LogOut = () => {
         setLogIn(false);
@@ -34,13 +35,18 @@ const HomePage = () => {
     
     return (
         <div className={styles.entireWrapper}>
-            <Modal title="Use direction" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>You can use any student ID to log in\n if it doesn't exit in system, we create one for you\n You can add courses we selected from NTU EE and IM department(eg. 11173)</p>
+            <Modal footer={null} title="INSTRUCTIONS" open={isModalOpen} onCancel={handleCancel}>
+                <p>You can use any student ID to log in for Demo usage.</p>
+                <p>If it doesn't exit in system, we create one for you.</p>
+                <p>Search course and add course to your class schedule.</p>
+                <p>For deleting the course, click trash icon below that course.</p>
+                <p className={styles.highlight}>click classroom to bring you there by Google map</p>
+
             </Modal>
             <div className={styles.header}>
-                <div className={styles.titleWrapper}>
+                <div className={styles.titleWrapper} onClick={()=>{setIsModalOpen(true);}}>
                     <h1 className={styles}>{stuID}'s</h1>
-                    <h1 className={styles}> Lesson Table</h1>
+                    <h1 className={styles}> class schedule</h1>
                 </div>
                 
                 <div>

@@ -51,7 +51,7 @@ const Side = () => {
     let content = <div>
         <p>You can add courses of NTU EE and IM department in 111-1.</p>
         <p>(eg. 11173, 30966, 20775)</p>
-        <p>For more courses info, you also can refer to official NTU course search website.</p>
+        <p>For more course info, you also can refer to official NTU course search website.</p>
     </div>
     return (
         <SideBar>

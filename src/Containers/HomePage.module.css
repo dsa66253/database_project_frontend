@@ -3,7 +3,6 @@
 }
 .entireWrapper{
     max-width: 100%;
-    background-color: red;
 }
 
 .container{
@@ -26,6 +25,9 @@
     display: flex;
     flex-direction: row;
 }
+.titleWrapper:hover{
+    cursor: pointer;
+}
 .header{
     color:white; 
         
@@ -37,13 +39,34 @@
     padding:0 1rem;
     align-items: center;
 }
+.highlight{
+    text-align: center;
+    color:#40a9ff;
+    margin:auto;
+    padding: auto;
+    font-weight: bold;
+    animation-name: jump;
+    animation-iteration-count: infinite;
+    animation-duration: 4s;
+    position: relative;
+    animation-fill-mode: both;
+    /* animation-direction: alternate-reverse; */
+}
+
+@keyframes jump {
+    0%, 20%, 50%, 70%, 100%{transform: translateY(13px);} 
+    40% {transform: translateY(-2px);} 
+    60% {transform: translateY(5px);}
+    80% {transform: translateY(8px);}
+    
+}
 
 @media screen and (max-width:769px) {
     .container{
+
         width: 100%;
         display:flex;
         flex-direction: column;
-        padding:5px 5px;
         
         
     }

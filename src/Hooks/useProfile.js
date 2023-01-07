@@ -21,8 +21,12 @@ const ProfileProvider = (props) => {
     const [language, setLanguage] = useState("ch");
 
     async function changeSchedule() {
-        const tmp = await getSchedule(stuID, language);
-        setSchedule(tmp);
+        if(logIn){
+            console.log("change")
+            const tmp = await getSchedule(stuID, language);
+            setSchedule(tmp);
+        }
+
     }
 
     function printLessonTable() {
