@@ -7,11 +7,9 @@ import LoginPage from './Containers/LoginPage';
 
 function App() {
   const { logIn } = Profile();
-  // const {logIn} = Lesson();
-  // console.log("logIn", logIn);
   return (
-    // <LoginPage/>
-    <div>{logIn? <HomePage/> : <LoginPage/>}</div>
+    <div style={{maxWidth:"100vw"}}>{logIn? <HomePage/> : <LoginPage/>}</div>
+    // <HomePage/>
   );
 }
 

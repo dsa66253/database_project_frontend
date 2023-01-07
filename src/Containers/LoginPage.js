@@ -1,24 +1,17 @@
-import { Typography, Input, message} from 'antd';
+import { Typography, Input, message, Spin} from 'antd';
 import { Profile } from '../Hooks/useProfile';
-import styled from 'styled-components'
-import {postUser, getUser} from '../Api/user';
-
+import {postUser} from '../Api/user';
+import styles from "./LoginPage.module.css"
+import { useState } from 'react';
 const { Title } = Typography;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 500px;
-  margin: auto;`;
+
 
 const LoginPage = () => {
     const { setStuID, stuID, setLogIn} = Profile();
     const [messageApi, contextHolder] = message.useMessage();
+    const [loading, setLoading] = useState(false);
     const showMessage = (type, content, duration=1.5)=>{
-        // console.log(type, content, duration)
         messageApi.open({type, content, duration})
     }
     const onLogin = async (id) => {
@@ -29,7 +22,9 @@ const LoginPage = () => {
             showMessage("loading", "Logging in...", 0)
             let correct = false
             try{
+                setLoading(true)
                 correct = await postUser(id)
+                setLoading(false)
                 messageApi.destroy()
                 if (correct){
                     // user exist
@@ -50,22 +45,23 @@ const LoginPage = () => {
         }
     }
     return (
-        <Wrapper>
-            {contextHolder}
-            <Title>Log In</Title>
-            <Input.Search
-                defaultValue={stuID}
-                onChange={(e) => {  
-                setStuID(e.target.value)
-            }}
-            enterButton="Log in"
-            placeholder="Enter your student ID."
-            onSearch={(stuID) => {
-                onLogin(stuID);
-            }}
-            style={{marginBottom:'1em'}}
-        />
-        </Wrapper>
+        <div className={styles.Wrapper}>
+            <Spin tip="Loading" spinning={loading}>
+                {contextHolder}
+                <Title className={styles.title}>Log In</Title>
+                <Input.Search
+                    defaultValue={stuID}
+                    onChange={(e) => {  
+                    setStuID(e.target.value)
+                }}
+                enterButton="Log in"
+                placeholder="Enter your student ID."
+                onSearch={(stuID) => {
+                    onLogin(stuID);
+                }}
+                style={{marginBottom:'1em'}}/>
+            </Spin>
+        </div>
     )
 
 }

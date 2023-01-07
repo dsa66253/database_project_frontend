@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, Card, Button, message } from "antd";
+import { Input, Card, Button, message, Popover } from "antd";
 import { Profile } from "../Hooks/useProfile"
 import styled from 'styled-components';
 import getCourseInfo from "../Api/course";
@@ -9,10 +9,11 @@ import { getSchedule } from "../Api/courseByUser";
 
 const SideBar = styled.section`
     display: flex;
-    align: right;
+    // align: right;
     flex-direction: column;
     
 `
+
 const Side = () => {
     const {language} = Profile();
     const [searchLesson, setSearchLesson] = useState("");
@@ -47,22 +48,30 @@ const Side = () => {
             showMessage("error", "fail to add the course")
         }
     }
+    let content = <div>
+        <p>You can add courses of NTU EE and IM department in 111-1.</p>
+        <p>(eg. 11173, 30966, 20775)</p>
+        <p>For more courses info, you also can refer to official NTU course search website.</p>
+    </div>
     return (
-        <SideBar style={{backgroundColor:'#f5f5f5'}}>
+        <SideBar>
             {contextHolder}
+            <Popover content={content} title="Instructions">
             <Input.Search
+                style={{padding:"5px"}}
                 value={searchLesson}
                 onChange={(e) => setSearchLesson(e.target.value)}
                 enterButton="Search Course"
-                placeholder="Enter a lesson ID."
+                placeholder={"hover me"}
                 onSearch={(searchLesson) => {
                     if(!searchLesson) {
                         return;
                     }
                     searchCourse(searchLesson);
                 }}
-                style={{marginBottom:'1em'}}
             />
+            </Popover>
+
             
             {
                 search?

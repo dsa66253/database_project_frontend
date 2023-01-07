@@ -4,6 +4,7 @@ import { deleteCourseByUser } from '../Api/courseByUser';
 import { Profile } from '../Hooks/useProfile';
 import { useEffect } from 'react';
 import { getSchedule } from '../Api/courseByUser';
+import {message } from 'antd';
 
 const DeleteIcon = styled.button`
     cursor:pointer;
@@ -11,7 +12,8 @@ const DeleteIcon = styled.button`
     background-color:rgba(0, 0, 0, 0);
 `
 const TableWrapper = styled.section`
-    align: center;
+    
+    padding:10px 5px;
 `
 
 const timeTable = [{time: "7:10-8:00", id: '0', index: 0}, {time: "8:10-9:00", id: '1', index: 1},
@@ -26,24 +28,25 @@ const column = [0,1,2,3,4,5,6]
 
 const Ta = (cnt) => {
     const { stuID, lessonTable, setSchedule, language } = Profile();
+    const [messageApi, contextHolder] = message.useMessage();
     const querystring = "https://www.google.com/maps/search/?api=1&query="
     const row = cnt.row
     const deleteCourse = async(e) => {
         console.log(e.currentTarget.value);
         const cid = e.currentTarget.value;
-        console.log("stu", stuID);
-        console.log("cid", cid);
         const del = await deleteCourseByUser(stuID, cid);
         if(del) {
             const tmp = await getSchedule(stuID, language);
             const sch = [...tmp];
-            console.log(sch);
             setSchedule(sch);
+            messageApi.open({type:"success", content:"successful deletion"})
+            
         }
     }
-    // console.log("row", row)
     return(
-        column.map(function(index) {
+        <>
+        {contextHolder}
+        {column.map(function(index) {
             var num = row*7 + index;
             if(lessonTable[num] !== undefined) {
                 return (
@@ -51,7 +54,7 @@ const Ta = (cnt) => {
                         <h4 style={{margin:"0", textAlign:"center"}} key={index + row + 'name'} 
                             >{lessonTable[num].name}</h4>
                         <a key={index + row + 'location'}href={querystring + lessonTable[num].google} 
-                            target="_blank" rel="noreferrer" style={{margin:"0", textAlign:"center", display:"block"}}>{lessonTable[num].location}</a>
+                            target="_blank" rel="noreferrer" style={{margin:"0", textAlign:"center", display:"block", textDecoration:"none", color:"blue"}}>{lessonTable[num].location}</a>
                         <DeleteIcon style={{margin:"auto", display:"block"}} value={lessonTable[num].id} onClick={deleteCourse}><DeleteOutlined /></DeleteIcon>
                     </td>
                 )
@@ -59,7 +62,9 @@ const Ta = (cnt) => {
                 return (<td key={index + row} style={{backgroundColor: '#FFFFCE', borderRadius: '10px'}}>
                 </td>)
             }
-    }))
+        })}
+        </>
+    )
 }
 
 const SingleRow = (time) => {
@@ -75,7 +80,8 @@ const SingleRow = (time) => {
 }
 
 const LessonTable = () => {
-    const { stuID, lessonTable, setSchedule, language } = Profile();
+    const { stuID, setSchedule, language } = Profile();
+
     useEffect(()=>{
         //info Don't use asycn function as parameter for useEffect.
         //info Instead, write a async function and call it in the function body passed to useEffect
@@ -87,6 +93,7 @@ const LessonTable = () => {
     }, []) // call it at first time redner
     return (
             <TableWrapper>
+                
                 <table cellPadding='3' cellSpacing='2' >
                     <tbody>
                         <tr>

@@ -1,15 +1,20 @@
 import LessonTable from './Table';
-import { Button, Layout, Switch } from 'antd';
+import {Layout, Switch, Modal } from 'antd';
 import {LogoutOutlined} from "@ant-design/icons";
 import Side from './Side';
 import { Profile } from '../Hooks/useProfile';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import styles from "./HomePage.module.css"
 
 const { Header, Content, Sider } = Layout;
 
 
 const HomePage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { setLogIn, language, setLanguage, stuID} = Profile();
+    useEffect(()=>{
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }, [])
     const LogOut = () => {
         setLogIn(false);
     }
@@ -20,23 +25,34 @@ const HomePage = () => {
             setLanguage("en");
         }
     };
+    const handleOk = () => {
+    setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+    setIsModalOpen(false);
+    };
+    
     return (
-        <Layout>
-            <Header style={{color:'white', fontSize: '40px',  backgroundColor:'#40a9ff', display: 'flex', justifyContent:'space-between'}}>
-                <div className='logo'>{stuID}'s Lesson Table</div>
-                <div style={{float:"right"}}>
+        <div className={styles.entireWrapper}>
+            <Modal title="Use direction" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <p>You can use any student ID to log in\n if it doesn't exit in system, we create one for you\n You can add courses we selected from NTU EE and IM department(eg. 11173)</p>
+            </Modal>
+            <div className={styles.header}>
+                <div className={styles.titleWrapper}>
+                    <h1 className={styles}>{stuID}'s</h1>
+                    <h1 className={styles}> Lesson Table</h1>
+                </div>
+                
+                <div>
                     <Switch style={{margin:"auto"}} defaultChecked checkedChildren="ch" unCheckedChildren="en" onChange={onChange} />
                     <LogoutOutlined style={{margin:"auto"}} onClick={LogOut}/>
                 </div>
-
-            </Header>
-            <Layout>
-                <Sider width={300} theme='light' style={{margin:'1em', backgroundColor:"#f5f5f5"}}><Side/></Sider>
-                <Content theme='light' style={{margin:'1em'}}>
-                    <LessonTable/>
-                </Content>
-            </Layout>
-        </Layout>
+            </div>
+            <div className={styles.container}>
+                <div className={styles.search}><Side /></div>
+                <div  className={styles.lessnTable}><LessonTable/></div>
+            </div>
+        </div>
     )
 }
 export default HomePage;
