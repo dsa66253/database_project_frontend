@@ -1,4 +1,4 @@
-import { Typography, Input, message, Spin} from 'antd';
+import { Typography, Input, message, Spin, Popover} from 'antd';
 import { Profile } from '../Hooks/useProfile';
 import {postUser} from '../Api/user';
 import styles from "./LoginPage.module.css"
@@ -44,11 +44,16 @@ const LoginPage = () => {
 
         }
     }
+    let content = <div>
+        <p>You can use any student ID to log in for Demo purpose.</p>
+        <p>(eg. r09525126)</p>
+    </div>
     return (
         <div className={styles.Wrapper}>
             <Spin tip="Loading" spinning={loading}>
                 {contextHolder}
                 <Title className={styles.title}>Log In</Title>
+                <Popover content={content} placement="bottom">
                 <Input.Search
                     defaultValue={stuID}
                     onChange={(e) => {  
@@ -60,6 +65,7 @@ const LoginPage = () => {
                     onLogin(stuID);
                 }}
                 style={{marginBottom:'1em'}}/>
+                </Popover>
             </Spin>
         </div>
     )

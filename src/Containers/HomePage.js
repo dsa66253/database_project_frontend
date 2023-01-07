@@ -36,10 +36,10 @@ const HomePage = () => {
     return (
         <div className={styles.entireWrapper}>
             <Modal footer={null} title="INSTRUCTIONS" open={isModalOpen} onCancel={handleCancel}>
-                <p>You can use any student ID to log in for Demo usage.</p>
+                <p>You can use any student ID to log in for Demo purpose.</p>
                 <p>If it doesn't exit in system, we create one for you.</p>
                 <p>Search course and add course to your class schedule.</p>
-                <p>For deleting the course, click trash icon below that course.</p>
+                <p>For deleting the course, click trash icon below corresponding course.</p>
                 <p className={styles.highlight}>click classroom to bring you there by Google map</p>
 
             </Modal>
