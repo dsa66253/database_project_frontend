@@ -36,6 +36,7 @@ const LoginPage = () => {
                 // always login  
                 setLogIn(true)
             }catch (e){
+                setLoading(false)
                 messageApi.destroy()
                 showMessage("error", 'Something went wrong with server', 2)
                 console.log("e", e)

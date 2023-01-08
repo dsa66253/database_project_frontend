@@ -48,7 +48,8 @@ const Side = () => {
             showMessage("error", "fail to add the course")
         }
     }
-    let content = <div>
+    let content = <div >
+        <h3>INSTRUCTIONS</h3>
         <p>You can add courses of NTU EE and IM department in 111-1.</p>
         <p>(eg. 11173, 30966, 20775)</p>
         <p>For more course info, you can refer to official NTU course search website.</p>
@@ -56,7 +57,7 @@ const Side = () => {
     return (
         <SideBar>
             {contextHolder}
-            <Popover content={content} title="Instructions">
+            <Popover content={content}>
             <Input.Search
                 style={{padding:"5px"}}
                 value={searchLesson}
