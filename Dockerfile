@@ -10,6 +10,10 @@ COPY . .
 RUN npm install
 # Build the app
 RUN npm run build
+# set ownership and permissions
+RUN chown -R node:node ./
+#switch to node user
+USER node
 # ==== RUN =======
 # Set the env to "production"
 ENV NODE_ENV production
